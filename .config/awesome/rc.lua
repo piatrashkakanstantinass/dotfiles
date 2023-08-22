@@ -103,7 +103,6 @@ end)
 awful.spawn({"picom", "-b"}, false)
 awful.spawn({"xset", "r", "rate", "250", "25"}, false)
 awful.spawn.with_shell("setxkbmap -layout us,lt,ru -option ctrl:nocaps,grp:alt_shift_toggle")
-awful.spawn.easy_async_with_shell("pkill mpris-proxy; mpris-proxy")
 awful.spawn.easy_async_with_shell("pkill xss-lock; xss-lock -l -- betterlockscreen -l")
 
 awful.spawn.easy_async_with_shell("pkill qbittorrent; qbittorrent")
