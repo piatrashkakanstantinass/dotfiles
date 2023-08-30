@@ -1,12 +1,3 @@
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.ignorecase = true
-vim.g.mapleader = " "
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
@@ -18,20 +9,22 @@ if not vim.loop.fs_stat(lazypath) then
     lazypath,
   })
 end
+
+require("config")
+
 vim.opt.rtp:prepend(lazypath)
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.opt.tabstop = 2
+vim.opt.softtabstop = 2
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.ignorecase = true
+vim.g.mapleader = " "
 
 require("lazy").setup({
+  { import = "plugins" },
   { "nvim-lua/plenary.nvim", lazy = true },
-  {
-    "catppuccin/nvim",
-    name = "catppuccin",
-    priority = 1000,
-    opts = {
-      integrations = {
-        mason = true,
-      },
-    },
-  },
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
@@ -105,6 +98,17 @@ require("lazy").setup({
             capabilities = capabilities,
           })
         end,
+        ["emmet_ls"] = function()
+          require("lspconfig")["emmet_ls"].setup({
+            init_options = {
+              html = {
+                options = {
+                  ["bem.enabled"] = true,
+                },
+              },
+            },
+          })
+        end,
         ["lua_ls"] = function()
           require("lspconfig")["lua_ls"].setup({
             settings = {
@@ -138,10 +142,16 @@ require("lazy").setup({
   },
   {
     "L3MON4D3/LuaSnip",
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+    },
     build = "make install_jsregexp",
     opts = {
       delete_check_events = "TextChanged",
     },
+    config = function()
+      require("luasnip.loaders.from_vscode").lazy_load()
+    end,
     keys = {
       {
         "<tab>",
@@ -183,6 +193,7 @@ require("lazy").setup({
         root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
         sources = {
           nls.builtins.formatting.stylua,
+          nls.builtins.formatting.prettier
         },
       }
     end,
@@ -200,6 +211,7 @@ require("lazy").setup({
       },
     },
   },
+  { "rafamadriz/friendly-snippets" },
 }, {
   install = {
     colorscheme = { "catppuccin" },
