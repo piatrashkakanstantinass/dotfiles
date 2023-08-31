@@ -1,4 +1,8 @@
 return {
-  "catppuccin/nvim",
-  { "MunifTanjim/nui.nvim", lazy = true },
+  {
+    "akinsho/toggleterm.nvim",
+    opts = {
+      open_mapping = [[<c-\>]],
+    },
+  },
 }

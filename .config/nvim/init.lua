@@ -10,16 +10,8 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 
-require("config")
 
 vim.opt.rtp:prepend(lazypath)
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
-vim.opt.tabstop = 2
-vim.opt.softtabstop = 2
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.ignorecase = true
 vim.g.mapleader = " "
 
 require("lazy").setup({
@@ -49,11 +41,13 @@ require("lazy").setup({
   },
 
   -- LSP
+  "hrsh7th/cmp-path",
   {
     "hrsh7th/nvim-cmp",
     event = "InsertEnter",
     dependencies = {
       "hrsh7th/cmp-nvim-lsp",
+      "hrsh7th/cmp-path",
       "LuaSnip",
       "saadparwaiz1/cmp_luasnip",
     },
@@ -66,14 +60,19 @@ require("lazy").setup({
             luasnip.lsp_expand(args.body)
           end,
         },
+        completion = {
+          completeopt = "menu,menuone",
+        },
         sources = cmp.config.sources({
           { name = "nvim_lsp" },
           { name = "luasnip" },
+          { name = "path" },
         }),
         mapping = cmp.mapping.preset.insert({
           ["<C-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
           ["<C-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
           ["<C-y>"] = cmp.mapping.confirm(),
+          ["<C-e>"] = cmp.mapping.abort(),
         }),
       }
     end,
@@ -193,7 +192,7 @@ require("lazy").setup({
         root_dir = require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git"),
         sources = {
           nls.builtins.formatting.stylua,
-          nls.builtins.formatting.prettier
+          nls.builtins.formatting.prettier,
         },
       }
     end,
@@ -218,3 +217,5 @@ require("lazy").setup({
   },
 })
 vim.cmd("colorscheme catppuccin")
+
+require("config")
