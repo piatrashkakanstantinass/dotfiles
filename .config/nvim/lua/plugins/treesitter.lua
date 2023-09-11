@@ -8,4 +8,8 @@ return {
       require("nvim-treesitter.configs").setup(opts)
     end,
   },
+  {
+    "windwp/nvim-ts-autotag",
+    opts = {},
+  },
 }
