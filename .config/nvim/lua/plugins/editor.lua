@@ -1,9 +1,8 @@
 return {
   {
     "nvim-tree/nvim-tree.lua",
-    opts = {
-      open_on_setup = true,
-    },
+    opts = {},
+    lazy = false,
     keys = {
       {
         "<leader>e",
