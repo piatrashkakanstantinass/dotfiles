@@ -5,4 +5,9 @@ return {
       open_mapping = [[<c-\>]],
     },
   },
+  {
+    "lukas-reineke/indent-blankline.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+    opts = {},
+  },
 }
